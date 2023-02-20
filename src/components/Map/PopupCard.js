@@ -17,7 +17,7 @@ const PopupCard = ({ name, isConfirmed }) => {
           )}
         </h3>
         <div className='mt-4'>
-          <a className='btn btn-sm btn-primary'>Get Directions</a>
+          <a className='btn btn-sm btn-outline'>Get Directions</a>
         </div>
       </Popup>
     </>

@@ -8,7 +8,7 @@ const MapLayerGroup = ({api, icon, layerName }) => {
   const [locationData, setLocationData] = useState([]);
   useEffect(() => {
     axios
-      .get(api)
+      .get(`${process.env.NEXT_PUBLIC_API_URL}${api}`)
       .then(function (response) {
         const responseData = response.data.data;
 

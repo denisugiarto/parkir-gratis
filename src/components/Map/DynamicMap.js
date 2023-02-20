@@ -59,12 +59,12 @@ const Map = ({ children, className, width, height, ...rest }) => {
       {/* <MyLocation /> */}
       <LayersControl position='topright'>
         <MapLayerGroup
-          api='http://localhost:1337/api/free-parks?filters[name][$contains]=indomaret'
+          api='free-parks?filters[name][$contains]=indomaret'
           icon={iconIndomaret}
           layerName='Indomaret'
         />
         <MapLayerGroup
-          api='http://localhost:1337/api/free-parks?filters[name][$contains]=alfamart'
+          api='free-parks?filters[name][$contains]=alfamart'
           icon={iconAlfamart}
           layerName='Alfamart'
         />
