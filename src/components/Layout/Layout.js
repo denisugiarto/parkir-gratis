@@ -10,7 +10,7 @@ const Layout = ({ children, className, title, ...rest }) => {
         <title>{title}</title>
       </Head>
       <Header />
-      <main className={`${styles.main} container mt-4 md:mt-8`}>{children}</main>
+      <main className={`${styles.main}`}>{children}</main>
     </div>
   );
 };

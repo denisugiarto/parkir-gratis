@@ -12,18 +12,12 @@
 
 body {
 font-family: 'Noto Sans', sans-serif;
+height: 100%;
 }
 
 a {
   color: inherit;
   text-decoration: none;
-}
-
-.leaflet-marker-icon {
-  margin-left: -16px !important;
-  margin-top: -32px !important;
-  width: 32px !important;
-  height: 32px !important;
 }
 
 /* .Layout {

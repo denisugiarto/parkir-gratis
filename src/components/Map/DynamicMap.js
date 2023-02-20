@@ -1,11 +1,20 @@
-import { useEffect } from 'react';
-import Leaflet from 'leaflet';
-import * as ReactLeaflet from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import * as ReactLeaflet from 'react-leaflet';
 import LocateMe from './LocateMe';
-import Locate from 'leaflet.locatecontrol';
+import MapLayerGroup from './MapLayerGroup';
+import SetIcon from './SetIcon';
 
-const { MapContainer, useMap } = ReactLeaflet;
+const {
+  MapContainer,
+  useMap,
+  LayersControl,
+  Marker,
+  Popup,
+  LayerGroup,
+  Circle,
+  FeatureGroup,
+  Rectangle,
+} = ReactLeaflet;
 
 function MyLocation() {
   const LocationControl = new Locate();
@@ -14,32 +23,53 @@ function MyLocation() {
 }
 
 const Map = ({ children, className, width, height, ...rest }) => {
-  let mapClassName = 'w-full h-full';
+  let mapClassName = 'w-screen h-full';
 
   if (className) {
     mapClassName = `${mapClassName} ${className}`;
   }
 
-  useEffect(() => {
-    (async function init() {
-      delete Leaflet.Icon.Default.prototype._getIconUrl;
-      Leaflet.Icon.Default.mergeOptions({
-        iconRetinaUrl: 'leaflet/images/marker-icon-2x.png',
-        iconUrl: 'leaflet/images/marker-icon.png',
-        shadowUrl: 'leaflet/images/marker-shadow.png'
-      });
-    })();
-  }, []);
+  const iconAlfamart = SetIcon({
+    iconUrl: 'logo_alfamart.png',
+    iconSize: [75, 29],
+    iconAnchor: [38, 15],
+    popupAnchor: [0, -10],
+  });
+
+  const iconIndomaret = SetIcon({
+    iconUrl: 'logo_indomaret.png',
+    iconSize: [80, 28],
+    iconAnchor: [40, 14],
+    popupAnchor: [0, -7],
+  });
 
   return (
-    <MapContainer className={mapClassName} {...rest}>
+    <MapContainer
+      className={mapClassName}
+      scrollWheelZoom={false}
+      style={{ height: '600px' }}
+      {...rest}
+    >
       <ReactLeaflet.TileLayer
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       />
-      {/* <LocateMe /> */}
+
+      <LocateMe />
       {/* <MyLocation /> */}
-      {children(ReactLeaflet, Leaflet)}
+      <LayersControl position='topright'>
+        <MapLayerGroup
+          api='http://localhost:1337/api/free-parks?filters[name][$contains]=indomaret'
+          icon={iconIndomaret}
+          layerName='Indomaret'
+        />
+        <MapLayerGroup
+          api='http://localhost:1337/api/free-parks?filters[name][$contains]=alfamart'
+          icon={iconAlfamart}
+          layerName='Alfamart'
+        />
+      </LayersControl>
+      {/* {children(ReactLeaflet, Leaflet)} */}
     </MapContainer>
   );
 };
